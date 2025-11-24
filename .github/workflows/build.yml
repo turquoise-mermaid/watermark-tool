@@ -30,7 +30,7 @@ jobs:
         pyinstaller build-windows.spec
     
     - name: Upload Windows artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: watermark-tool-windows
         path: dist/WatermarkTool.exe
@@ -60,7 +60,7 @@ jobs:
         zip -r WatermarkTool-Mac.zip WatermarkTool.app
     
     - name: Upload Mac artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: watermark-tool-mac
         path: dist/WatermarkTool-Mac.zip
