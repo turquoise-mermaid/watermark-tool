@@ -1,0 +1,583 @@
+ETSY WATERMARK TOOL - QA TESTING CHECKLIST
+==========================================
+
+TESTER INFORMATION
+------------------
+Tester Name: ___________________________
+Date: ___________________________
+Windows Version: ___________________________
+Test Duration: ___________________________
+
+
+PRE-TEST SETUP
+--------------
+[ ] Fresh Windows 10 or 11 machine (clean install preferred)
+[ ] Downloaded watermark_tool.exe
+[ ] Prepared test images folder with:
+    [ ] At least 10 PNG files (various sizes)
+    [ ] At least 10 JPG files
+    [ ] At least 5 WEBP files (if available)
+    [ ] Mix of small (< 1MB) and large (> 5MB) files
+[ ] Prepared test logo file (PNG with transparency)
+[ ] At least 5GB free disk space
+
+
+CRITICAL TEST SCENARIOS
+========================
+
+TEST 1: FIRST-TIME SETUP WITH LOGO
+-----------------------------------
+Steps:
+1. Double-click watermark_tool.exe
+2. Verify welcome screen appears
+3. Follow setup wizard completely:
+   - Choose "Yes - I have a logo"
+   - Upload test logo (PNG file)
+   - Enter text: "Test Watermark Shop"
+   - Choose watermark count: 7
+   - Choose opacity: 30%
+   - Choose logo position: Bottom-right
+   - Save template as "Test Template 1"
+
+Expected Results:
+[ ] Program launches without errors
+[ ] File picker opens for logo selection
+[ ] Logo loads successfully (shows checkmark)
+[ ] All wizard steps complete smoothly
+[ ] Template saves successfully
+[ ] Returns to main menu
+
+Actual Results:
+_____________________________________________
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 2: FIRST-TIME SETUP WITHOUT LOGO
+--------------------------------------
+Steps:
+1. Exit program and delete config.json file
+2. Restart watermark_tool.exe
+3. Follow setup wizard:
+   - Choose "No - just text"
+   - Enter text: "No Logo Test"
+   - Choose count: 5
+   - Choose opacity: 20%
+   - Save as "Text Only Template"
+
+Expected Results:
+[ ] Program allows skipping logo
+[ ] Setup completes without logo
+[ ] Template saves successfully
+
+Actual Results:
+_____________________________________________
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 3: BATCH WATERMARKING (SMALL BATCH)
+-----------------------------------------
+Steps:
+1. From main menu, choose "Watermark Images"
+2. Select "Test Template 1"
+3. Select folder with 10 test images
+4. Choose "Same folder" for output
+5. Wait for processing to complete
+
+Expected Results:
+[ ] Folder picker opens correctly
+[ ] Program detects all 10 images
+[ ] Progress bar displays correctly
+[ ] All 10 images process without errors
+[ ] Watermarked files created with "_watermarked" suffix
+[ ] Original files unchanged
+[ ] Watermarked images contain:
+    [ ] Logo in bottom-right corner
+    [ ] Multiple scattered text watermarks visible
+    [ ] Image quality preserved
+
+Actual Results:
+Number of files processed: ________
+Number of errors: ________
+Processing time: ________
+Visual quality: ________
+
+PASS/FAIL: ________
+
+
+TEST 4: BATCH WATERMARKING (LARGE BATCH)
+-----------------------------------------
+Steps:
+1. Prepare folder with 50+ images
+2. Run watermarking process
+3. Monitor performance
+
+Expected Results:
+[ ] Handles 50+ images without crashing
+[ ] Progress bar updates smoothly
+[ ] Completes in reasonable time (< 5 minutes)
+[ ] No memory errors
+
+Actual Results:
+Number of files: ________
+Processing time: ________
+Errors: ________
+
+PASS/FAIL: ________
+
+
+TEST 5: DIFFERENT OUTPUT FOLDER
+--------------------------------
+Steps:
+1. Watermark images
+2. Choose "New folder" for output
+3. Select different folder via picker
+
+Expected Results:
+[ ] Folder picker opens
+[ ] Watermarked files saved to selected folder
+[ ] Original folder unchanged
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 6: MULTIPLE TEMPLATES
+---------------------------
+Steps:
+1. Create second template:
+   - No logo
+   - Text: "Second Template"
+   - Count: 10
+   - Opacity: 40%
+2. Create third template:
+   - With logo
+   - Text: "Third Template"
+   - Count: 3
+   - Opacity: 10%
+3. Test switching between templates
+
+Expected Results:
+[ ] Can create multiple templates
+[ ] Templates save correctly
+[ ] Can select different templates
+[ ] Each template applies different settings
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 7: TEMPLATE EXPORT/IMPORT
+-------------------------------
+Steps:
+1. Go to "Manage Templates"
+2. Export "Test Template 1"
+3. Delete the template
+4. Import the exported JSON file
+
+Expected Results:
+[ ] Export creates JSON file
+[ ] JSON file is valid
+[ ] Import restores template correctly
+[ ] Template works after import
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 8: DIFFERENT IMAGE FORMATS
+--------------------------------
+Steps:
+Test watermarking on:
+1. PNG files (transparent background)
+2. JPG files (no transparency)
+3. JPEG files
+4. WEBP files (if available)
+
+Expected Results:
+[ ] PNG: Watermark applied, transparency preserved
+[ ] JPG: Watermark applied correctly
+[ ] JPEG: Watermark applied correctly
+[ ] WEBP: Watermark applied correctly
+[ ] All formats maintain image quality
+
+Actual Results:
+PNG: ________
+JPG: ________
+JPEG: ________
+WEBP: ________
+
+PASS/FAIL: ________
+
+
+TEST 9: DIFFERENT LOGO POSITIONS
+---------------------------------
+Steps:
+Create templates with logos in:
+1. Bottom-right
+2. Bottom-left
+3. Top-right
+4. Top-left
+
+Expected Results:
+[ ] Logo appears in correct position for each template
+[ ] Logo size appropriate (not too large/small)
+[ ] Logo doesn't obscure important content
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 10: OPACITY VARIATIONS
+----------------------------
+Steps:
+Test all opacity levels:
+1. 10% (very subtle)
+2. 20% (subtle)
+3. 30% (balanced)
+4. 40% (bold)
+
+Expected Results:
+[ ] 10%: Barely visible but present
+[ ] 20%: Subtle, doesn't overwhelm
+[ ] 30%: Clearly visible, balanced
+[ ] 40%: Very visible, prominent
+[ ] All levels produce visible watermarks
+
+Actual Results:
+10%: ________
+20%: ________
+30%: ________
+40%: ________
+
+PASS/FAIL: ________
+
+
+ERROR HANDLING TESTS
+=====================
+
+TEST 11: CORRUPTED LOGO FILE
+-----------------------------
+Steps:
+1. Create template with corrupted/invalid image file
+2. Observe error handling
+
+Expected Results:
+[ ] Clear error message displayed
+[ ] Program doesn't crash
+[ ] User can continue without logo
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 12: OVERSIZED LOGO FILE
+-----------------------------
+Steps:
+1. Try to upload logo file > 50MB
+2. Observe error handling
+
+Expected Results:
+[ ] Error message about file size
+[ ] Suggests using smaller file
+[ ] Program doesn't crash
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 13: EMPTY FOLDER
+---------------------
+Steps:
+1. Select folder with no images
+2. Attempt to watermark
+
+Expected Results:
+[ ] Clear message: "No images found"
+[ ] Returns to menu without crashing
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 14: INVALID FILE FORMATS
+------------------------------
+Steps:
+1. Place non-image files in folder (PDF, TXT, etc.)
+2. Run watermarking
+
+Expected Results:
+[ ] Ignores non-image files
+[ ] Processes only valid images
+[ ] No crashes
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 15: INSUFFICIENT DISK SPACE
+---------------------------------
+Steps:
+1. Fill disk to < 100MB free
+2. Attempt large batch watermark
+
+Expected Results:
+[ ] Clear error about disk space
+[ ] Doesn't corrupt existing files
+[ ] Fails gracefully
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+TEST 16: READ-ONLY OUTPUT FOLDER
+---------------------------------
+Steps:
+1. Set output folder to read-only
+2. Attempt watermarking
+
+Expected Results:
+[ ] Clear permission error
+[ ] Suggests choosing different folder
+[ ] No crashes
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+USER EXPERIENCE TESTS
+======================
+
+TEST 17: SETUP WIZARD CLARITY
+------------------------------
+Questions:
+[ ] Were instructions clear at each step?
+[ ] Was the wizard easy to follow?
+[ ] Any confusing terminology?
+[ ] Appropriate number of steps? (not too many/few)
+
+Rating (1-5): ________
+Suggestions:
+_____________________________________________
+
+
+TEST 18: PROGRESS FEEDBACK
+---------------------------
+Questions:
+[ ] Was progress bar helpful?
+[ ] Did it update smoothly?
+[ ] Was processing time reasonable?
+[ ] Clear indication when complete?
+
+Rating (1-5): ________
+Suggestions:
+_____________________________________________
+
+
+TEST 19: ERROR MESSAGES
+-----------------------
+Questions:
+[ ] Were error messages clear and helpful?
+[ ] Did they suggest solutions?
+[ ] Appropriate tone (not too technical)?
+
+Rating (1-5): ________
+Suggestions:
+_____________________________________________
+
+
+TEST 20: OVERALL USABILITY
+---------------------------
+Questions:
+[ ] Could a non-technical Etsy seller use this?
+[ ] Is the workflow intuitive?
+[ ] Any features missing?
+[ ] Any unnecessary complexity?
+
+Rating (1-5): ________
+Suggestions:
+_____________________________________________
+
+
+VISUAL QUALITY ASSESSMENT
+==========================
+
+TEST 21: WATERMARK APPEARANCE
+------------------------------
+Review watermarked images:
+[ ] Watermarks clearly visible but not overwhelming
+[ ] Text readable at normal viewing distance
+[ ] Logo appropriately sized
+[ ] Scattered placement looks natural (not too clustered)
+[ ] Image quality not significantly degraded
+
+Attach 3-5 sample watermarked images to report.
+
+Rating (1-5): ________
+Issues noted:
+_____________________________________________
+
+
+TEST 22: METADATA VERIFICATION
+-------------------------------
+Steps:
+1. Right-click watermarked image
+2. View Properties → Details
+3. Check for copyright metadata
+
+Expected Results:
+[ ] Copyright field contains watermark text
+[ ] Artist field contains watermark text
+
+Actual Results:
+_____________________________________________
+
+PASS/FAIL: ________
+
+
+PERFORMANCE TESTS
+=================
+
+TEST 23: LARGE IMAGE HANDLING
+------------------------------
+Test with images:
+- 10MP+ resolution
+- 20MB+ file size
+
+Expected Results:
+[ ] Processes without crashing
+[ ] Reasonable processing time (< 30 sec per image)
+[ ] Output quality maintained
+
+Actual Results:
+Processing time: ________
+Memory usage: ________
+
+PASS/FAIL: ________
+
+
+TEST 24: MEMORY USAGE
+----------------------
+Steps:
+1. Open Task Manager
+2. Monitor memory during large batch (50+ images)
+
+Expected Results:
+[ ] Memory usage stays under 1GB
+[ ] No memory leaks (usage returns to normal after)
+
+Actual Results:
+Peak memory: ________
+Final memory: ________
+
+PASS/FAIL: ________
+
+
+EDGE CASES
+==========
+
+TEST 25: VERY SMALL IMAGES
+---------------------------
+Test with images < 500x500 pixels
+
+Expected Results:
+[ ] Watermarks still visible
+[ ] Logo scales appropriately
+[ ] No errors
+
+PASS/FAIL: ________
+
+
+TEST 26: VERY LARGE IMAGES
+---------------------------
+Test with images > 10,000x10,000 pixels
+
+Expected Results:
+[ ] Processes without timeout
+[ ] Watermarks appropriately sized
+
+PASS/FAIL: ________
+
+
+TEST 27: SPECIAL CHARACTERS IN FILENAMES
+-----------------------------------------
+Test with filenames containing:
+- Spaces
+- Special characters (@, #, &, etc.)
+- Unicode characters
+
+Expected Results:
+[ ] All files process correctly
+[ ] Output filenames valid
+
+PASS/FAIL: ________
+
+
+FINAL ASSESSMENT
+================
+
+CRITICAL BUGS (Must fix before release):
+1. _____________________________________________
+2. _____________________________________________
+3. _____________________________________________
+
+MINOR BUGS (Can fix in update):
+1. _____________________________________________
+2. _____________________________________________
+3. _____________________________________________
+
+FEATURE SUGGESTIONS:
+1. _____________________________________________
+2. _____________________________________________
+3. _____________________________________________
+
+OVERALL RECOMMENDATION:
+[ ] READY FOR RELEASE
+[ ] NEEDS MINOR FIXES
+[ ] NEEDS MAJOR FIXES
+[ ] NOT READY
+
+Tester Comments:
+_____________________________________________
+_____________________________________________
+_____________________________________________
+_____________________________________________
+
+Tester Signature: _____________________ Date: __________
+
+
+REQUIRED DELIVERABLES
+=====================
+Please provide:
+[ ] Completed checklist (this document)
+[ ] 5-10 sample watermarked images
+[ ] Screenshots of any errors encountered
+[ ] Video recording of complete workflow (optional but helpful)
+[ ] List of suggestions/improvements
+
+Submit all materials via email or file sharing link.
+
+Thank you for testing!
