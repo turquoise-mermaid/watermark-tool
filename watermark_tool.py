@@ -483,15 +483,9 @@ def configure_watermark():
         if metadata:
             config['metadata'] = metadata
     
-    # Save template option
-    print("\n--- SAVE TEMPLATE ---")
-    save = input("\nSave this configuration as a template? (y/n): ").strip().lower()
-    
-    if save == 'y':
-        filename = input("Enter template name (e.g., my_watermark): ").strip()
-        if not filename.endswith('.json'):
-            filename += '.json'
-        save_template(config, filename)
+    # Template save disabled in v1.0 (caused crashes in bundled version)
+    # Will be re-enabled in v1.1 with proper path handling
+    print("\n(Template save feature coming in v1.1)")
     
     return config
 
