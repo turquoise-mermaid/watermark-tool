@@ -477,6 +477,8 @@ def configure_watermark():
             print("  ⚠ Please enter a number")
     
     # Metadata
+    print("\n(EXIF = hidden image file info. Adds '© YourName' to file properties")
+    print(" - not visible on the image itself, but viewable in file details)")
     add_metadata = input("\nAdd copyright metadata to EXIF? (y/n): ").strip().lower()
     if add_metadata == 'y':
         metadata = input("Enter copyright text (e.g., © 2024 Your Name): ").strip()
