@@ -356,10 +356,9 @@ def main_menu():
     print("WATERMARK TOOL v2.0")
     print("=" * 60)
     print("\n1. Create new watermark configuration")
-    print("2. Load existing template")
-    print("3. Exit")
+    print("2. Exit")
     
-    choice = input("\nEnter choice (1-3): ").strip()
+    choice = input("\nEnter choice (1-2): ").strip()
     return choice
 
 
@@ -506,15 +505,7 @@ def batch_process(config):
         print("  ⚠ No folder selected")
         return
     
-    # Select output folder
-    print("\nSelect folder for watermarked images...")
-    output_folder = select_directory("Select Output Folder")
-    
-    if not output_folder:
-        print("  ⚠ No folder selected")
-        return
-    
-    # Find image files
+    # Find image files first to show count
     image_extensions = ('.png', '.jpg', '.jpeg', '.webp')
     image_files = []
     
@@ -526,8 +517,66 @@ def batch_process(config):
         print(f"\n  ⚠ No image files found in {input_folder}")
         return
     
-    print(f"\nFound {len(image_files)} image(s) to process")
-    print(f"Output folder: {output_folder}\n")
+    print(f"\n✓ Input folder selected: {len(image_files)} images found")
+    
+    # Select output folder with clear separation
+    while True:
+        print("\n" + "=" * 60)
+        print("--- SELECT OUTPUT FOLDER ---")
+        print("=" * 60)
+        print("Where should watermarked images be saved?")
+        print("\nIMPORTANT:")
+        print("  • Create a NEW folder if you want to keep originals separate")
+        print("  • Don't select the same folder as input")
+        print("\nPress Enter to select output folder...")
+        input()  # Pause for user to read
+        
+        output_folder = select_directory("Select Output Folder")
+        
+        if not output_folder:
+            print("  ⚠ No folder selected")
+            return
+        
+        # Check if input and output are the same
+        if os.path.abspath(input_folder) == os.path.abspath(output_folder):
+            print("\n⚠ WARNING: Input and output are the SAME folder")
+            print("Original and watermarked images will be mixed together.")
+            print("Recommendation: Choose a different output folder.")
+            proceed = input("\nContinue anyway? (y/n): ").strip().lower()
+            if proceed != 'y':
+                continue  # Ask for output folder again
+        
+        # Check for existing watermarked files
+        existing_files = [f for f in os.listdir(output_folder) 
+                         if '_watermarked' in f.lower() and f.lower().endswith(image_extensions)]
+        
+        if existing_files:
+            print(f"\n⚠ WARNING: Output folder contains existing watermarked files")
+            print(f"\nFound {len(existing_files)} files with '_watermarked' in the name.")
+            print("\nIf you continue:")
+            print("  • Files with matching names will be OVERWRITTEN")
+            print("  • Previous versions will be LOST (not saved)")
+            print("  • No backup copies will be created")
+            print("\nRecommendation: Create a new output folder to preserve existing files.")
+            
+            overwrite_choice = input("\nContinue anyway? (y/n): ").strip().lower()
+            
+            if overwrite_choice != 'y':
+                print("\n1. Select different output folder")
+                print("2. Exit program")
+                exit_choice = input("\nEnter choice (1-2): ").strip()
+                
+                if exit_choice == '2':
+                    print("\nExiting. No images were processed.")
+                    return
+                # If choice == '1' or anything else, loop continues to ask for folder again
+                continue
+        
+        # If we get here, output folder is acceptable
+        break
+    
+    print(f"\n✓ Output folder selected: {output_folder}")
+    print(f"\nProcessing {len(image_files)} image(s)...\n")
     
     # Process each image
     successful = 0
@@ -569,27 +618,11 @@ def main():
             batch_process(config)
         
         elif choice == '2':
-            print("\nSelect template file...")
-            template_file = select_file(
-                title="Select Template",
-                filetypes=[("All files", "*.*"), ("JSON files", "*.json")]
-            )
-            
-            if template_file:
-                try:
-                    config = load_template(template_file)
-                    batch_process(config)
-                except Exception as e:
-                    print(f"  ✗ Error loading template: {e}")
-            else:
-                print("  ⚠ No template selected")
-        
-        elif choice == '3':
             print("\nThank you for using Watermark Tool!")
             break
         
         else:
-            print("\n  ⚠ Invalid choice. Please enter 1, 2, or 3")
+            print("\n  ⚠ Invalid choice. Please enter 1 or 2")
 
 
 if __name__ == "__main__":
